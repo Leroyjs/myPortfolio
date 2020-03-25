@@ -1,0 +1,450 @@
+@import "../fonts/TTFirsNeue/stylesheet.css" all;
+@import "../fonts/HelveticaNeueCyr/stylesheet.css" all;
+*,
+*:before,
+*:after {
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box; }
+
+input {
+  outline: none; }
+
+body {
+  margin: 0; }
+
+.header {
+  position: fixed;
+  height: 0;
+  margin-top: 60px;
+  padding-right: 180px;
+  padding-left: 25vw;
+  width: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  z-index: 9; }
+
+.wrapper {
+  background-color: #232121; }
+
+.first-slide {
+  height: 100vh;
+  padding-top: 60px;
+  padding-bottom: 60px;
+  padding-left: 6.25vw;
+  position: relative; }
+  .first-slide__language {
+    cursor: pointer;
+    color: #fdfdfd;
+    font-family: "Helvetica Neue Cyr";
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 14px;
+    text-transform: uppercase; }
+  .first-slide__nav-block {
+    height: 30%;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-pack: distribute;
+    justify-content: space-around; }
+
+.line {
+  width: 2px;
+  height: 60px;
+  background-color: #fdfdfd;
+  margin: 9px 0; }
+
+.annotation {
+  font-size: 32px;
+  font-weight: 400;
+  line-height: 32px;
+  text-transform: uppercase;
+  font-family: "TT Firs Neue"; }
+  .annotation_red-color {
+    color: #cd4138; }
+  .annotation__row {
+    color: #fdfdfd;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    margin-top: 5px;
+    margin-bottom: 8px; }
+  .annotation_margin-left {
+    margin-left: 100px; }
+  .annotation__wrapper {
+    padding-top: 4px;
+    margin-top: -4px;
+    height: 33px;
+    cursor: pointer;
+    border-bottom: 2px solid #fdfdfd;
+    color: rgba(253, 253, 253, 0.2);
+    display: inline-block;
+    overflow: hidden; }
+  .annotation a {
+    text-decoration: none; }
+
+.menu-btn {
+  height: 10px;
+  z-index: 9999;
+  cursor: pointer;
+  -webkit-transition: 0.3s background-color;
+  -o-transition: 0.3s background-color;
+  transition: 0.3s background-color; }
+
+.menu-btn span::before,
+.menu-btn span::after {
+  content: '';
+  width: 100px;
+  height: 2px;
+  background-color: #fbfbfb;
+  display: block;
+  -webkit-transition: 0.3s;
+  -o-transition: 0.3s;
+  transition: 0.3s; }
+
+.menu-btn span::after {
+  -webkit-transform: translateY(8px);
+  -ms-transform: translateY(8px);
+  transform: translateY(8px); }
+
+.title {
+  margin: 0;
+  color: #fdfdfd;
+  font-family: "TT Firs Neue";
+  font-size: 160px;
+  font-weight: 400;
+  line-height: 160px;
+  text-transform: uppercase;
+  position: relative; }
+  .title__wrapper {
+    position: relative;
+    max-width: 1320px; }
+  .title_margin-left {
+    margin-left: 17.9375vw;
+    display: inline; }
+  .title__logo {
+    position: absolute;
+    left: 500px;
+    top: -30px; }
+  .title__symbol {
+    position: absolute;
+    right: 0;
+    bottom: 26px; }
+  .title_left {
+    left: 887px; }
+
+.last-project {
+  position: absolute;
+  top: 123px;
+  right: -95px; }
+  .last-project a {
+    position: absolute;
+    color: #fdfdfd;
+    font-family: "Helvetica Neue Cyr";
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 16px;
+    bottom: 120px;
+    right: -30px; }
+  .last-project img {
+    opacity: 0.1; }
+
+ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0; }
+
+.my-photo {
+  height: 180px;
+  width: 180px;
+  border-radius: 50%; }
+
+.social-links {
+  margin-top: -120px;
+  position: absolute;
+  color: #fdfdfd;
+  font-family: "Helvetica Neue Cyr";
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 16px; }
+  .social-links ul {
+    height: 35vh;
+    width: 37px;
+    -webkit-box-pack: justify;
+    -ms-flex-pack: justify;
+    justify-content: space-between;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex; }
+    .social-links ul li {
+      -webkit-transform: rotate(-90deg);
+      -ms-transform: rotate(-90deg);
+      transform: rotate(-90deg); }
+
+.arrow {
+  position: absolute;
+  left: 17.5vw;
+  bottom: -12px; }
+
+main {
+  padding-left: 6.25vw; }
+
+.sub-title {
+  color: #fdfdfd;
+  font-family: "Helvetica Neue Cyr";
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 16px;
+  padding-left: 13px; }
+  .sub-title__wrapper {
+    width: 18.75vw; }
+  .sub-title_lead {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: end;
+    -ms-flex-pack: end;
+    justify-content: flex-end; }
+    .sub-title_lead h3 {
+      color: rgba(253, 253, 253, 0.4);
+      font-family: "Helvetica Neue Cyr";
+      font-size: 16px;
+      font-weight: 400;
+      line-height: 16px;
+      margin: 0; }
+
+.about {
+  margin-top: 100px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  height: 530px; }
+
+.content {
+  width: 31.25vw; }
+  .content_text-about {
+    color: #fdfdfd;
+    font-family: "TT Firs Neue";
+    font-size: 32px;
+    font-weight: 400;
+    line-height: 41.6px;
+    text-transform: uppercase; }
+    .content_text-about h2 {
+      margin: 0;
+      font-size: 32px;
+      font-weight: 400;
+      line-height: 41.6px; }
+    .content_text-about p {
+      margin: 0; }
+  .content_text-my-skills {
+    color: #fdfdfd;
+    font-family: "TT Firs Neue";
+    text-transform: uppercase; }
+    .content_text-my-skills h2 {
+      margin: 0;
+      font-size: 64px;
+      font-weight: 400;
+      line-height: 64px; }
+  .content_approach {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    position: relative;
+    -webkit-box-pack: justify;
+    -ms-flex-pack: justify;
+    justify-content: space-between; }
+  .content_margin-left {
+    margin-left: 101px; }
+  .content_red-color {
+    color: #cd4138; }
+
+.sub-content {
+  width: 18.75vw;
+  -webkit-box-pack: justify;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -webkit-box-align: start;
+  -ms-flex-align: start;
+  align-items: flex-start;
+  padding-bottom: 90px;
+  color: rgba(253, 253, 253, 0.4);
+  font-family: "Helvetica Neue Cyr";
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 22.4px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex; }
+
+.sub-sub-content {
+  width: 25vw;
+  position: relative; }
+  .sub-sub-content__row {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex; }
+  .sub-sub-content__column {
+    width: 50%; }
+    .sub-sub-content__column span {
+      color: rgba(253, 253, 253, 0.4);
+      font-family: "Helvetica Neue Cyr";
+      font-size: 16px;
+      font-weight: 400;
+      line-height: 16px; }
+    .sub-sub-content__column ul {
+      color: #fdfdfd;
+      font-family: "Helvetica Neue Cyr";
+      font-size: 16px;
+      font-weight: 400;
+      line-height: 22.4px; }
+
+.my-skills {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex; }
+
+.my-works {
+  padding-top: 50px;
+  height: 100vh; }
+
+.approach {
+  height: 900px; }
+  .approach__row {
+    height: 284px;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex; }
+  .approach__arrow {
+    margin-left: calc((100% - 461px)/2); }
+
+.circle {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  border-radius: 50%; }
+  .circle_small {
+    height: 200px;
+    width: 200px;
+    border: 1px solid rgba(253, 253, 253, 0.2);
+    -ms-flex-item-align: center;
+    -ms-grid-row-align: center;
+    align-self: center; }
+  .circle_big {
+    width: 500px;
+    height: 500px;
+    background-image: url(../img/Ellipse.svg);
+    -ms-flex-item-align: center;
+    -ms-grid-row-align: center;
+    align-self: center;
+    position: absolute;
+    bottom: 26px; }
+  .circle span {
+    text-align: center;
+    color: #fdfdfd;
+    font-family: "Helvetica Neue Cyr";
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 22.4px; }
+
+.lead {
+  height: 1110px;
+  margin-top: 150px; }
+  .lead__main {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    margin-top: 200px; }
+  .lead__right-column {
+    margin-top: 272px; }
+    .lead__right-column button {
+      cursor: pointer;
+      width: 400px;
+      height: 80px;
+      background-color: #cd4138;
+      border: none;
+      color: #fdfdfd;
+      font-family: "Helvetica Neue Cyr";
+      font-size: 16px;
+      font-weight: 400;
+      line-height: 22.4px; }
+  .lead__left-column {
+    width: 50vw;
+    height: 272px;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    -webkit-box-pack: justify;
+    -ms-flex-pack: justify;
+    justify-content: space-between; }
+    .lead__left-column input::-webkit-input-placeholder {
+      color: rgba(253, 253, 253, 0.2); }
+    .lead__left-column input:-ms-input-placeholder {
+      color: rgba(253, 253, 253, 0.2); }
+    .lead__left-column input::-ms-input-placeholder {
+      color: rgba(253, 253, 253, 0.2); }
+    .lead__left-column input::placeholder {
+      color: rgba(253, 253, 253, 0.2); }
+    .lead__left-column input {
+      background-color: rgba(0, 0, 0, 0);
+      color: #fdfdfd;
+      border: none;
+      font-family: "TT Firs Neue";
+      font-size: 64px;
+      font-weight: 400;
+      line-height: 64px;
+      text-transform: uppercase; }
+  .lead__email {
+    color: #fdfdfd;
+    font-family: "Helvetica Neue Cyr";
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 16px;
+    text-decoration: underline; }
+  .lead__row {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    margin-top: 50px; }
+    .lead__row ul {
+      color: #ffffff;
+      font-family: "Helvetica Neue Cyr";
+      font-size: 16px;
+      font-weight: 400;
+      line-height: 22.4px; }
+    .lead__row span {
+      margin-left: 150px;
+      display: inline-block;
+      width: 132px;
+      color: rgba(253, 253, 253, 0.4);
+      font-family: "Helvetica Neue Cyr";
+      font-size: 16px;
+      font-weight: 400;
+      line-height: 22.4px; }
+  .lead__about {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    width: 56.25vw;
+    margin-left: 100px; }

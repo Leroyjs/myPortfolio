@@ -1,0 +1,510 @@
+@import "../fonts/TTFirsNeue/stylesheet.css"all;
+@import "../fonts/HelveticaNeueCyr/stylesheet.css"all;
+$mainColor:#232121;
+$subColor:#cd4138;
+$white:#fdfdfd;
+
+*,
+*:before,
+*:after {
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+input {
+    outline: none;
+}
+
+body {
+    margin: 0;
+}
+
+.header {
+    position: fixed;
+    height: 0;
+    margin-top: 60px;
+    padding-right: 180px;
+    padding-left: 25vw;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    z-index: 9;
+}
+
+.wrapper {
+    background-color: $mainColor;
+}
+
+.first-slide {
+    height: 100vh;
+    padding-top: 60px;
+    padding-bottom: 60px;
+    padding-left: 6.25vw;
+    position: relative;
+
+    &__language {
+        cursor: pointer;
+        color: $white;
+        font-family: "Helvetica Neue Cyr";
+        font-size: 14px;
+        font-weight: 400;
+        line-height: 14px;
+        text-transform: uppercase;
+    }
+
+    &__nav-block {
+        height: 30%;
+        display: flex;
+        justify-content: space-around;
+    }
+}
+
+.line {
+    width: 2px;
+    height: 60px;
+    background-color: $white;
+    margin: 9px 0;
+}
+
+.annotation {
+    font-size: 32px;
+    font-weight: 400;
+    line-height: 32px;
+    text-transform: uppercase;
+    font-family: "TT Firs Neue";
+
+
+
+
+
+    &_red-color {
+        color: $subColor;
+    }
+
+    &__row {
+        color: $white;
+        display: flex;
+        margin-top: 5px;
+        margin-bottom: 8px;
+    }
+
+    &_margin-left {
+        margin-left: 100px;
+    }
+
+    &__wrapper {
+        padding-top: 4px;
+        margin-top: -4px;
+        height: 33px;
+        cursor: pointer;
+        border-bottom: 2px solid #fdfdfd;
+        color: rgba(253, 253, 253, 0.2);
+        display: inline-block;
+        overflow: hidden;
+    }
+
+    a {
+        text-decoration: none;
+    }
+}
+
+.menu-btn {
+    height: 10px;
+    z-index: 9999;
+    cursor: pointer;
+    transition: 0.3s background-color;
+}
+
+.menu-btn span::before,
+.menu-btn span::after {
+    content: '';
+    width: 100px;
+    height: 2px;
+    background-color: #fbfbfb;
+    display: block;
+    transition: 0.3s;
+}
+
+
+.menu-btn span::after {
+    transform: translateY(8px);
+}
+
+.title {
+    margin: 0;
+    color: #fdfdfd;
+    font-family: "TT Firs Neue";
+    font-size: 160px;
+    font-weight: 400;
+    line-height: 160px;
+    text-transform: uppercase;
+    position: relative;
+
+    &__wrapper {
+        position: relative;
+        max-width: 1320px;
+    }
+
+    &_margin-left {
+        margin-left: 17.9375vw;
+        display: inline;
+    }
+
+    &__logo {
+        position: absolute;
+        left: 500px;
+        top: -30px;
+    }
+
+    &__symbol {
+        position: absolute;
+        right: 0;
+        bottom: 26px;
+    }
+
+    &_left {
+        left: 887px
+    }
+
+}
+
+.last-project {
+    position: absolute;
+    top: 123px;
+    right: -95px;
+
+    a {
+        position: absolute;
+        color: #fdfdfd;
+        font-family: "Helvetica Neue Cyr";
+        font-size: 16px;
+        font-weight: 400;
+        line-height: 16px;
+        bottom: 120px;
+        right: -30px;
+    }
+
+    img {
+        opacity: 0.1;
+    }
+}
+
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+.my-photo {
+    height: 180px;
+    width: 180px;
+    border-radius: 50%;
+}
+
+.social-links {
+    margin-top: -120px;
+    position: absolute;
+    color: #fdfdfd;
+    font-family: "Helvetica Neue Cyr";
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 16px;
+
+    ul {
+        height: 35vh;
+        width: 37px;
+        justify-content: space-between;
+        flex-direction: column;
+        display: flex;
+
+        li {
+            transform: rotate(-90deg);
+        }
+    }
+}
+
+.arrow {
+    position: absolute;
+    left: 17.5vw;
+    bottom: -12px;
+}
+
+main {
+    padding-left: 6.25vw;
+}
+
+.sub-title {
+    color: #fdfdfd;
+    font-family: "Helvetica Neue Cyr";
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 16px;
+    padding-left: 13px;
+
+    &__wrapper {
+        width: 18.75vw;
+    }
+
+    &_lead {
+        display: flex;
+        justify-content: flex-end;
+
+        h3 {
+            color: rgba(253, 253, 253, 0.4);
+            font-family: "Helvetica Neue Cyr";
+            font-size: 16px;
+            font-weight: 400;
+            line-height: 16px;
+            margin: 0;
+        }
+    }
+}
+
+.about {
+    margin-top: 100px;
+    display: flex;
+    height: 530px;
+}
+
+.content {
+    width: 31.25vw;
+
+    &_text-about {
+        color: #fdfdfd;
+        font-family: "TT Firs Neue";
+        font-size: 32px;
+        font-weight: 400;
+        line-height: 41.6px;
+        text-transform: uppercase;
+
+        h2 {
+            margin: 0;
+            font-size: 32px;
+            font-weight: 400;
+            line-height: 41.6px;
+        }
+
+        p {
+            margin: 0;
+        }
+    }
+
+    &_text-my-skills {
+        color: #fdfdfd;
+        font-family: "TT Firs Neue";
+
+        text-transform: uppercase;
+
+        h2 {
+            margin: 0;
+            font-size: 64px;
+            font-weight: 400;
+            line-height: 64px;
+        }
+    }
+
+    &_approach {
+        display: flex;
+        position: relative;
+        justify-content: space-between;
+    }
+
+    &_margin-left {
+        margin-left: 101px;
+    }
+
+    &_red-color {
+        color: $subColor;
+    }
+}
+
+.sub-content {
+    width: 18.75vw;
+    justify-content: space-between;
+    flex-direction: column;
+    align-items: flex-start;
+    padding-bottom: 90px;
+    color: rgba(253, 253, 253, 0.4);
+    font-family: "Helvetica Neue Cyr";
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 22.4px;
+    display: flex;
+}
+
+.sub-sub-content {
+    width: 25vw;
+    position: relative;
+
+    &__row {
+        display: flex;
+    }
+
+    &__column {
+        width: 50%;
+
+        span {
+            color: rgba(253, 253, 253, 0.4);
+            font-family: "Helvetica Neue Cyr";
+            font-size: 16px;
+            font-weight: 400;
+            line-height: 16px;
+        }
+
+        ul {
+            color: #fdfdfd;
+            font-family: "Helvetica Neue Cyr";
+            font-size: 16px;
+            font-weight: 400;
+            line-height: 22.4px;
+        }
+    }
+}
+
+
+.my-skills {
+    display: flex;
+}
+
+.my-works {
+    padding-top: 50px;
+    height: 100vh;
+}
+
+.approach {
+    height: 900px;
+
+    &__row {
+        height: 284px;
+        display: flex;
+    }
+
+    &__arrow {
+        margin-left: calc((100% - 461px)/2);
+    }
+}
+
+.circle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+
+
+    &_small {
+        height: 200px;
+        width: 200px;
+        border: 1px solid rgba(253, 253, 253, 0.2);
+        align-self: center;
+    }
+
+    &_big {
+        width: 500px;
+        height: 500px;
+        // border: 1px dashed #cd4138;
+        background-image: url(../img/Ellipse.svg);
+        align-self: center;
+        position: absolute;
+        bottom: 26px;
+    }
+
+    span {
+        text-align: center;
+        color: #fdfdfd;
+        font-family: "Helvetica Neue Cyr";
+        font-size: 16px;
+        font-weight: 400;
+        line-height: 22.4px;
+    }
+}
+
+.lead {
+    height: 1110px;
+    margin-top: 150px;
+
+    &__main {
+        display: flex;
+        margin-top: 200px;
+    }
+
+    &__right-column {
+        margin-top: 272px;
+
+        button {
+            cursor: pointer;
+            width: 400px;
+            height: 80px;
+            background-color: #cd4138;
+            border: none;
+            color: #fdfdfd;
+            font-family: "Helvetica Neue Cyr";
+            font-size: 16px;
+            font-weight: 400;
+            line-height: 22.4px;
+        }
+    }
+
+    &__left-column {
+        width: 50vw;
+        height: 272px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+
+        input::placeholder {
+            color: rgba(253, 253, 253, 0.2);
+        }
+
+        input {
+            background-color: rgba(0, 0, 0, 0);
+            color: $white;
+            border: none;
+            font-family: "TT Firs Neue";
+            font-size: 64px;
+            font-weight: 400;
+            line-height: 64px;
+            text-transform: uppercase;
+        }
+    }
+
+    &__email {
+        color: #fdfdfd;
+        font-family: "Helvetica Neue Cyr";
+        font-size: 16px;
+        font-weight: 400;
+        line-height: 16px;
+        text-decoration: underline;
+    }
+
+    &__row {
+        display: flex;
+        margin-top: 50px;
+
+
+
+        ul {
+            color: #ffffff;
+            font-family: "Helvetica Neue Cyr";
+            font-size: 16px;
+            font-weight: 400;
+            line-height: 22.4px;
+        }
+
+        span {
+            margin-left: 150px;
+            display: inline-block;
+            width: 132px;
+            color: rgba(253, 253, 253, 0.4);
+            font-family: "Helvetica Neue Cyr";
+            font-size: 16px;
+            font-weight: 400;
+            line-height: 22.4px;
+        }
+    }
+
+    &__about {
+        display: flex;
+        width: 56.25vw;
+        margin-left: 100px;
+    }
+}
