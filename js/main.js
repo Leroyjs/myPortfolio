@@ -65,7 +65,6 @@
 
             const appearInterval = setInterval(
                 () => {
-                    console.log('appear');
                     appearBlocks[count].style.paddingTop = '0px';
                     count++;
 
@@ -90,8 +89,6 @@
                     if (count >= appearBlocks.length) {
                         clearInterval(appearInterval);
                     }
-
-                    console.log('appear');
 
                     if (appearBlocks[count]) {
                         appearBlocks[count].style.paddingTop = '0px';
@@ -125,8 +122,6 @@
                     if (count >= appearBlocks.length) {
                         clearInterval(appearInterval);
                     }
-
-                    console.log('appear');
 
                     if (appearBlocks[count]) {
                         appearBlocks[count].style.paddingTop = '0px';
@@ -330,10 +325,8 @@
 
             if (index < 2) {
                 interval += 4;
-                console.log(interval);
             } else {
                 interval -= 2;
-                console.log(interval);
             }
 
             SVGCircleInstance.setStrokeRotate(deg);
@@ -361,10 +354,10 @@
     const footerLogo = document.querySelector('#footerLogo');
 
     titles.forEach((item) => {
-        appearScroll(item, () => appearanceOfTitle(item), 0.92);
+        appearScroll(item, () => appearanceOfTitle(item), 0.95);
     });
     appearScroll(instagramCircle, instagramCircleOpeningAnimation, 0.75);
-    appearScroll(mySkills, mySkillsAppear, 0.92);
+    appearScroll(mySkills, mySkillsAppear, 0.95);
     appearScroll(approachCircles, appearanceOfCircle, 0.75);
     appearScroll(footerLogo, appearanceOfFooterLogo, 0.8);
 })();
@@ -422,7 +415,6 @@
                 let scroller = setInterval(
                     function () {
                         if (scrollBy > wrapper.scrollTop - coordY && !end) {
-                            console.log(scrollBy);
                             wrapper.scrollBy(0, scrollBy);
                         } else {
                             wrapper.scrollTo(0, coordY);
@@ -457,6 +449,12 @@
             setTimeout(
                 () => {
                     end = true;
+                    if (item.classList.contains('menu__link_more-about')) {
+                        setTimeout(() => {
+                            const myPhoto = document.querySelector('.my-photo');
+                            myPhoto.click();
+                        }, 200);
+                    }
                 },
 
                 animationTime
@@ -470,7 +468,7 @@
     (function () {
         const inputs = document.querySelectorAll('.group input');
 
-        inputs.forEach((input) => {
+        inputs.forEach((input, index) => {
             input.addEventListener('input', () => {
                 if (input.value === '') {
                     input.classList.remove('group_active');
@@ -841,8 +839,6 @@ $(document).ready(function () {
             flag = true;
         }
 
-        console.log(scroll + 'px');
-
         moreAbout.classList.toggle('more-about_active');
         container.style.top = -scroll + 'px';
         container.classList.toggle('container_no-scroll');
@@ -879,9 +875,6 @@ $(document).ready(function () {
         } else {
             flag = true;
         }
-
-        console.log(scroll + 'px');
-
         moreAbout.classList.toggle('more-about_active');
         container.style.top = -scroll + 'px';
         container.classList.toggle('container_no-scroll');
@@ -916,105 +909,188 @@ $(document).ready(function () {
 
 // cursor
 (function () {
-    let coordinates = {
-        x: 0,
-        y: 0,
-    };
-    let isFixed = false;
-    cursorMain = document.querySelector('.cursor');
-    cursorSub = document.querySelector('.cursor__sub');
-    cursorSubEllipse = document.querySelector('.cursor__sub ellipse');
+    const isMobile = /Mobile|webOS|BlackBerry|IEMobile|MeeGo|mini|Fennec|Windows Phone|Android|iP(ad|od|hone)/i.test(
+        navigator.userAgent
+    );
+    if (!isMobile) {
+        let coordinates = {
+            x: 0,
+            y: 0,
+        };
+        let isFixed = false;
+        cursorMain = document.querySelector('.cursor');
+        cursorSub = document.querySelector('.cursor__sub');
+        cursorSubEllipse = document.querySelector('.cursor__sub ellipse');
 
-    document.querySelector('.wrapper').addEventListener('mousemove', (e) => {
-        cursorMain.style.left = e.pageX - 7 + 'px';
-        cursorMain.style.top = e.pageY - 7 + 'px';
-        if (!isFixed) {
-            coordinates.x = e.pageX - 29;
-            coordinates.y = e.pageY - 29;
-        }
-        cursorSub.style.opacity = 1;
-        cursorMain.style.opacity = 1;
-    });
-    document.querySelector('.menu').addEventListener('mousemove', (e) => {
-        cursorMain.style.left = e.pageX - 7 + 'px';
-        cursorMain.style.top = e.pageY - 7 + 'px';
-        if (!isFixed) {
-            coordinates.x = e.pageX - 29;
-            coordinates.y = e.pageY - 29;
-        }
-        cursorSub.style.opacity = 1;
-        cursorMain.style.opacity = 1;
-    });
-    document.body.addEventListener('mouseleave', () => {
-        cursorSub.style.opacity = 0;
-        cursorMain.style.opacity = 0;
-    });
-
-    const time = 30;
-    const interval = 1;
-    setInterval(() => {
-        const x = cursorSub.getBoundingClientRect().x;
-        const y = cursorSub.getBoundingClientRect().y;
-        const diffX = Math.abs(x - coordinates.x);
-        const diffY = Math.abs(y - coordinates.y);
-        if (!isFixed) {
-            cursorSubEllipse.style.ry =
-                19.5 -
-                (diffX / (time / interval) + diffY / (time / interval)) / 1.2 +
-                'px';
-            cursorSubEllipse.style.rx =
-                19.5 +
-                (diffX / (time / interval) + diffY / (time / interval)) / 1.8 +
-                'px';
-            cursorSubEllipse.style.transform =
-                'rotate(' +
-                Math.atan((y - coordinates.y) / (x - coordinates.x)) * 45 +
-                'deg)';
-        }
-
-        if (x > coordinates.x) {
-            cursorSub.style.left = x - diffX / (time / interval) + 'px';
-        }
-        if (x < coordinates.x) {
-            cursorSub.style.left = x + diffX / (time / interval) + 'px';
-        }
-        if (y > coordinates.y) {
-            cursorSub.style.top = y - diffY / (time / interval) + 'px';
-        }
-        if (y < coordinates.y) {
-            cursorSub.style.top = y + diffY / (time / interval) + 'px';
-        }
-    }, interval);
-
-    // cursor sticker
-    const stickers = document.querySelectorAll('.cursor__sticker');
-    let onSticker = false;
-    stickers.forEach((sticker) => {
-        sticker.addEventListener('mouseenter', (e) => {
-            isFixed = true;
-            onSticker = true;
-            cursorSubEllipse.style.transition = '0.1s ry, 0.1s rx';
-            coordinates.x =
-                e.target.getBoundingClientRect().x +
-                e.target.getBoundingClientRect().width * 0.5 -
-                29;
-            coordinates.y =
-                e.target.getBoundingClientRect().y +
-                e.target.getBoundingClientRect().height * 0.5 -
-                29;
-            cursorSubEllipse.style.ry = 29.5 + 'px';
-            cursorSubEllipse.style.rx = 29.5 + 'px';
-        });
-        sticker.addEventListener('mouseleave', (e) => {
-            onSticker = false;
-            cursorSubEllipse.style.ry = 19.5 + 'px';
-            cursorSubEllipse.style.rx = 19.5 + 'px';
-            setTimeout(() => {
-                if (!onSticker) {
-                    isFixed = false;
-                    cursorSubEllipse.style.transition = '0s ry, 0s rx';
+        document
+            .querySelector('.wrapper')
+            .addEventListener('mousemove', (e) => {
+                cursorMain.style.left = e.pageX - 7 + 'px';
+                cursorMain.style.top = e.pageY - 7 + 'px';
+                if (!isFixed) {
+                    coordinates.x = e.pageX - 29;
+                    coordinates.y = e.pageY - 29;
                 }
-            }, 100);
+                cursorSub.style.opacity = 1;
+                cursorMain.style.opacity = 1;
+            });
+        document.querySelector('.menu').addEventListener('mousemove', (e) => {
+            cursorMain.style.left = e.pageX - 7 + 'px';
+            cursorMain.style.top = e.pageY - 7 + 'px';
+            if (!isFixed) {
+                coordinates.x = e.pageX - 29;
+                coordinates.y = e.pageY - 29;
+            }
+            cursorSub.style.opacity = 1;
+            cursorMain.style.opacity = 1;
         });
-    });
+        document.body.addEventListener('mouseleave', () => {
+            cursorSub.style.opacity = 0;
+            cursorMain.style.opacity = 0;
+        });
+
+        const time = 30;
+        const interval = 1;
+        setInterval(() => {
+            const x = cursorSub.getBoundingClientRect().x;
+            const y = cursorSub.getBoundingClientRect().y;
+            const diffX = Math.abs(x - coordinates.x);
+            const diffY = Math.abs(y - coordinates.y);
+            if (!isFixed) {
+                cursorSubEllipse.style.ry =
+                    19.5 -
+                    (diffX / (time / interval) + diffY / (time / interval)) /
+                        1.2 +
+                    'px';
+                cursorSubEllipse.style.rx =
+                    19.5 +
+                    (diffX / (time / interval) + diffY / (time / interval)) /
+                        1.8 +
+                    'px';
+                cursorSubEllipse.style.transform =
+                    'rotate(' +
+                    Math.atan((y - coordinates.y) / (x - coordinates.x)) * 45 +
+                    'deg)';
+            }
+
+            if (x > coordinates.x) {
+                cursorSub.style.left = x - diffX / (time / interval) + 'px';
+            }
+            if (x < coordinates.x) {
+                cursorSub.style.left = x + diffX / (time / interval) + 'px';
+            }
+            if (y > coordinates.y) {
+                cursorSub.style.top = y - diffY / (time / interval) + 'px';
+            }
+            if (y < coordinates.y) {
+                cursorSub.style.top = y + diffY / (time / interval) + 'px';
+            }
+        }, interval);
+
+        // cursor sticker
+        const stickers = document.querySelectorAll('.cursor__sticker');
+        let onSticker = false;
+        let positionTimer;
+        stickers.forEach((sticker) => {
+            sticker.addEventListener('mouseenter', (e) => {
+                const input = document.querySelector('.group input:focus');
+                if (!(input === sticker)) {
+                    isFixed = true;
+                    onSticker = true;
+                    cursorSubEllipse.style.transition = '0.1s ry, 0.1s rx';
+                    positionTimer = setInterval(() => {
+                        coordinates.x =
+                            e.target.getBoundingClientRect().x +
+                            e.target.getBoundingClientRect().width * 0.5 -
+                            29;
+                        coordinates.y =
+                            e.target.getBoundingClientRect().y +
+                            e.target.getBoundingClientRect().height * 0.5 -
+                            29;
+                        cursorSubEllipse.style.ry = 29.5 + 'px';
+                        cursorSubEllipse.style.rx = 29.5 + 'px';
+                    }, 0);
+                }
+            });
+
+            sticker.addEventListener('mouseleave', (e) => {
+                clearInterval(positionTimer);
+                onSticker = false;
+                cursorSubEllipse.style.ry = 19.5 + 'px';
+                cursorSubEllipse.style.rx = 19.5 + 'px';
+                setTimeout(() => {
+                    if (!onSticker) {
+                        isFixed = false;
+                        cursorSubEllipse.style.transition = '0s ry, 0s rx';
+                    }
+                }, 100);
+            });
+
+            sticker.addEventListener('click', (e) => {
+                clearInterval(positionTimer);
+                onSticker = false;
+                cursorSubEllipse.style.ry = 19.5 + 'px';
+                cursorSubEllipse.style.rx = 19.5 + 'px';
+                setTimeout(() => {
+                    if (!onSticker) {
+                        isFixed = false;
+                        cursorSubEllipse.style.transition = '0s ry, 0s rx';
+                    }
+                }, 100);
+            });
+        });
+
+        // cursor sticker input
+        const stickerInputs = document.querySelectorAll(
+            '.cursor__sticker_input'
+        );
+        const cursorPoint = document.querySelector('.cursor__point');
+        stickerInputs.forEach((sticker, index) => {
+            sticker.addEventListener('mouseenter', (e) => {
+                const input = document.querySelector('.group input:focus');
+                if (!(input === sticker)) {
+                    cursorMain.style.backgroundColor =
+                        'rgba(253, 253, 253, 0.0)';
+                    cursorPoint.style.height = '40px';
+                    cursorPoint.style.borderRadius = '0px';
+                    cursorPoint.style.width = '2px';
+                }
+            });
+            sticker.addEventListener('mouseleave', (e) => {
+                cursorMain.style.backgroundColor = 'rgba(253, 253, 253, 0.2)';
+                cursorPoint.style.height = '12px';
+                cursorPoint.style.borderRadius = '50%';
+                cursorPoint.style.width = '12px';
+            });
+            sticker.addEventListener('mousemove', (e) => {
+                const input = document.querySelector('.group input:focus');
+                if (input === sticker) {
+                    cursorMain.style.backgroundColor =
+                        'rgba(253, 253, 253, 0.2)';
+                    cursorPoint.style.height = '12px';
+                    cursorPoint.style.borderRadius = '50%';
+                    cursorPoint.style.width = '12px';
+                }
+            });
+        });
+    }
+})();
+
+//my works
+(function () {
+    function appearScroll(appearBlock, callback, border) {
+        let flag = true;
+        const wrapper = document.querySelector('#wrapper');
+
+        wrapper.addEventListener('scroll', () => {
+            let appearTop = appearBlock.getBoundingClientRect();
+            let vh = document.documentElement.clientHeight;
+            let appearValue = appearTop.top - vh * border;
+
+            if (appearValue <= 0 && flag) {
+                callback();
+                flag = false;
+            }
+        });
+    }
 })();
