@@ -17,7 +17,7 @@
         minScrollTop,
         direction,
         onRenderCallback = null,
-        fricton = 0.95, // higher value for slower deceleration
+        fricton = 0.97, // higher value for slower deceleration
         vy = 0,
         stepAmt = 0.5,
         minMovement = 0.1,
@@ -94,36 +94,36 @@
     /*
      * http://jsbin.com/iqafek/2/edit
      */
-    var normalizeWheelDelta = (function () {
-        // Keep a distribution of observed values, and scale by the
-        // 33rd percentile.
-        var distribution = [],
-            done = null,
-            scale = 30;
-        return function (n) {
-            // Zeroes don't count.
-            if (n == 0) return n;
-            // After 500 samples, we stop sampling and keep current factor.
-            if (done != null) return n * done;
-            var abs = Math.abs(n);
-            // Insert value (sorted in ascending order).
-            outer: do {
-                // Just used for break goto
-                for (var i = 0; i < distribution.length; ++i) {
-                    if (abs <= distribution[i]) {
-                        distribution.splice(i, 0, abs);
-                        break outer;
-                    }
-                }
-                distribution.push(abs);
-            } while (false);
-            // Factor is scale divided by 33rd percentile.
-            var factor =
-                scale / distribution[Math.floor(distribution.length / 3)];
-            if (distribution.length == 500) done = factor;
-            return n * factor;
-        };
-    })();
+    // var normalizeWheelDelta = (function () {
+    //     // Keep a distribution of observed values, and scale by the
+    //     // 33rd percentile.
+    //     var distribution = [],
+    //         done = null,
+    //         scale = 30;
+    //     return function (n) {
+    //         // Zeroes don't count.
+    //         if (n == 0) return n;
+    //         // After 500 samples, we stop sampling and keep current factor.
+    //         if (done != null) return n * done;
+    //         var abs = Math.abs(n);
+    //         // Insert value (sorted in ascending order).
+    //         outer: do {
+    //             // Just used for break goto
+    //             for (var i = 0; i < distribution.length; ++i) {
+    //                 if (abs <= distribution[i]) {
+    //                     distribution.splice(i, 0, abs);
+    //                     break outer;
+    //                 }
+    //             }
+    //             distribution.push(abs);
+    //         } while (false);
+    //         // Factor is scale divided by 33rd percentile.
+    //         var factor =
+    //             scale / distribution[Math.floor(distribution.length / 3)];
+    //         if (distribution.length == 500) done = factor;
+    //         return n * factor;
+    //     };
+    // })();
 
     $.fn.smoothWheel = function () {
         //  var args = [].splice.call(arguments, 0);

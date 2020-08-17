@@ -225,7 +225,6 @@
     //     const appearanceOfCircleInterval = setInterval(
     //         () => {
     //             circles.forEach((item, index) => {
-    //                 console.warn(index, count);
     //                 item.style.transform = `translate(${algorithm[count].x[index]}vw, ${algorithm[count].y[index]}vh)`;
     //             });
     //             count++;
@@ -277,7 +276,6 @@
     //     const appearanceOfCircleInterval = setInterval(
     //         () => {
     //             circles.forEach((item, index) => {
-    //                 console.warn(index, count);
     //                 item.style.transform = `translate(${algorithm[count].x[index]}vw, ${algorithm[count].y[index]}vh)`;
     //             });
     //             count++;
@@ -396,11 +394,14 @@
             // closing the menu
             const menuBtn = document.querySelector('.menu-btn');
             const menu = document.querySelector('.menu');
-            const body = document.body;
-
+            const moreAbout = document.querySelector('.more-about');
+            if (moreAbout.classList.contains('more-about_active')) {
+                document.querySelector('.my-photo').click();
+            }
             menuBtn.classList.remove('menu-btn_active');
             menu.classList.remove('menu_active');
-            body.classList.remove('no-scroll');
+
+            // body.classList.remove('container_no-scroll');
 
             // getting anchor coordinates
             let coordY =
@@ -449,11 +450,18 @@
             setTimeout(
                 () => {
                     end = true;
+
                     if (item.classList.contains('menu__link_more-about')) {
-                        setTimeout(() => {
-                            const myPhoto = document.querySelector('.my-photo');
-                            myPhoto.click();
-                        }, 200);
+                        setTimeout(
+                            () => {
+                                const myPhoto = document.querySelector(
+                                    '.my-photo'
+                                );
+                                myPhoto.click();
+                            },
+
+                            200
+                        );
                     }
                 },
 
@@ -517,6 +525,8 @@
         }
 
         const input = document.querySelector('#lead__phone');
+        const input2 = document.querySelector('#lead__interested-in');
+        const input3 = document.querySelector('#lead__name');
         const button = document.querySelector('.lead button');
 
         button.addEventListener('click', (e) => {
@@ -543,6 +553,11 @@
                     button.classList.add('lead_done');
                     buttonInner.style.paddingTop = '0';
                     // mail to
+                    const form = `name=${input3}&phone=${input}&header=${input2}`;
+                    fetch('/mail.php', {
+                        method: 'POST',
+                        body: form,
+                    });
                 } else {
                     const errorBlock = document.querySelector('.group__error');
                     errorBlock.style.visibility = 'visible';
@@ -597,7 +612,7 @@
     let SVGCircleInstance = new SVGLogo(instagramCircle);
     let percentLoad = 0;
     let images = document.images;
-    let imagesTotalCount = images.length;
+    let imagesTotalCount = images.length - 1;
     let imagesLoadedCount = 0;
     let percent = 0;
     let fakePercen = 0;
@@ -612,6 +627,7 @@
             imagesClone.onload = imageLoaded;
             imagesClone.onerror = imageLoaded;
             imagesClone.src = images[i].src;
+
             i++;
         },
 
@@ -713,7 +729,6 @@
     function imageLoaded() {
         imagesLoadedCount++;
         percent = (100 / imagesTotalCount) * imagesLoadedCount;
-
         if (fakePercen < percent) {
             let loadPreladerFake = setInterval(
                 () => {
@@ -732,8 +747,7 @@
 
                 60
             );
-
-            if (percent >= 100) {
+            if (percent >= 100 || i >= imagesTotalCount) {
                 clearInterval(loadPrelader);
             }
         }
@@ -813,9 +827,9 @@
 })();
 
 //smooth scroll
-$(document).ready(function () {
-    $('#wrapper').smoothWheel();
-});
+// $(document).ready(function () {
+//     $('#wrapper').smoothWheel();
+// });
 
 // more about
 (function () {
@@ -875,6 +889,7 @@ $(document).ready(function () {
         } else {
             flag = true;
         }
+
         moreAbout.classList.toggle('more-about_active');
         container.style.top = -scroll + 'px';
         container.classList.toggle('container_no-scroll');
@@ -912,11 +927,13 @@ $(document).ready(function () {
     const isMobile = /Mobile|webOS|BlackBerry|IEMobile|MeeGo|mini|Fennec|Windows Phone|Android|iP(ad|od|hone)/i.test(
         navigator.userAgent
     );
+
     if (!isMobile) {
         let coordinates = {
             x: 0,
             y: 0,
         };
+
         let isFixed = false;
         cursorMain = document.querySelector('.cursor');
         cursorSub = document.querySelector('.cursor__sub');
@@ -927,35 +944,45 @@ $(document).ready(function () {
             .addEventListener('mousemove', (e) => {
                 cursorMain.style.left = e.pageX - 7 + 'px';
                 cursorMain.style.top = e.pageY - 7 + 'px';
+
                 if (!isFixed) {
                     coordinates.x = e.pageX - 29;
                     coordinates.y = e.pageY - 29;
                 }
+
                 cursorSub.style.opacity = 1;
                 cursorMain.style.opacity = 1;
             });
+
         document.querySelector('.menu').addEventListener('mousemove', (e) => {
             cursorMain.style.left = e.pageX - 7 + 'px';
             cursorMain.style.top = e.pageY - 7 + 'px';
+
             if (!isFixed) {
                 coordinates.x = e.pageX - 29;
                 coordinates.y = e.pageY - 29;
             }
+
             cursorSub.style.opacity = 1;
             cursorMain.style.opacity = 1;
         });
+
         document.body.addEventListener('mouseleave', () => {
             cursorSub.style.opacity = 0;
             cursorMain.style.opacity = 0;
         });
 
-        const time = 30;
+        const time = 15;
         const interval = 1;
-        setInterval(() => {
+
+        requestAnimationFrame(cursorMove);
+
+        function cursorMove() {
             const x = cursorSub.getBoundingClientRect().x;
             const y = cursorSub.getBoundingClientRect().y;
             const diffX = Math.abs(x - coordinates.x);
             const diffY = Math.abs(y - coordinates.y);
+
             if (!isFixed) {
                 cursorSubEllipse.style.ry =
                     19.5 -
@@ -976,40 +1003,91 @@ $(document).ready(function () {
             if (x > coordinates.x) {
                 cursorSub.style.left = x - diffX / (time / interval) + 'px';
             }
+
             if (x < coordinates.x) {
                 cursorSub.style.left = x + diffX / (time / interval) + 'px';
             }
+
             if (y > coordinates.y) {
                 cursorSub.style.top = y - diffY / (time / interval) + 'px';
             }
+
             if (y < coordinates.y) {
                 cursorSub.style.top = y + diffY / (time / interval) + 'px';
             }
-        }, interval);
+            requestAnimationFrame(cursorMove);
+        }
+
+        // setInterval(() => {
+        //     const x = cursorSub.getBoundingClientRect().x;
+        //     const y = cursorSub.getBoundingClientRect().y;
+        //     const diffX = Math.abs(x - coordinates.x);
+        //     const diffY = Math.abs(y - coordinates.y);
+
+        //     if (!isFixed) {
+        //         cursorSubEllipse.style.ry =
+        //             19.5 -
+        //             (diffX / (time / interval) + diffY / (time / interval)) /
+        //                 1.2 +
+        //             'px';
+        //         cursorSubEllipse.style.rx =
+        //             19.5 +
+        //             (diffX / (time / interval) + diffY / (time / interval)) /
+        //                 1.8 +
+        //             'px';
+        //         cursorSubEllipse.style.transform =
+        //             'rotate(' +
+        //             Math.atan((y - coordinates.y) / (x - coordinates.x)) * 45 +
+        //             'deg)';
+        //     }
+
+        //     if (x > coordinates.x) {
+        //         cursorSub.style.left = x - diffX / (time / interval) + 'px';
+        //     }
+
+        //     if (x < coordinates.x) {
+        //         cursorSub.style.left = x + diffX / (time / interval) + 'px';
+        //     }
+
+        //     if (y > coordinates.y) {
+        //         cursorSub.style.top = y - diffY / (time / interval) + 'px';
+        //     }
+
+        //     if (y < coordinates.y) {
+        //         cursorSub.style.top = y + diffY / (time / interval) + 'px';
+        //     }
+        // }, interval);
 
         // cursor sticker
         const stickers = document.querySelectorAll('.cursor__sticker');
         let onSticker = false;
         let positionTimer;
+
         stickers.forEach((sticker) => {
             sticker.addEventListener('mouseenter', (e) => {
                 const input = document.querySelector('.group input:focus');
+
                 if (!(input === sticker)) {
                     isFixed = true;
                     onSticker = true;
                     cursorSubEllipse.style.transition = '0.1s ry, 0.1s rx';
-                    positionTimer = setInterval(() => {
-                        coordinates.x =
-                            e.target.getBoundingClientRect().x +
-                            e.target.getBoundingClientRect().width * 0.5 -
-                            29;
-                        coordinates.y =
-                            e.target.getBoundingClientRect().y +
-                            e.target.getBoundingClientRect().height * 0.5 -
-                            29;
-                        cursorSubEllipse.style.ry = 29.5 + 'px';
-                        cursorSubEllipse.style.rx = 29.5 + 'px';
-                    }, 0);
+
+                    positionTimer = setInterval(
+                        () => {
+                            coordinates.x =
+                                e.target.getBoundingClientRect().x +
+                                e.target.getBoundingClientRect().width * 0.5 -
+                                29;
+                            coordinates.y =
+                                e.target.getBoundingClientRect().y +
+                                e.target.getBoundingClientRect().height * 0.5 -
+                                29;
+                            cursorSubEllipse.style.ry = 29.5 + 'px';
+                            cursorSubEllipse.style.rx = 29.5 + 'px';
+                        },
+
+                        0
+                    );
                 }
             });
 
@@ -1018,12 +1096,17 @@ $(document).ready(function () {
                 onSticker = false;
                 cursorSubEllipse.style.ry = 19.5 + 'px';
                 cursorSubEllipse.style.rx = 19.5 + 'px';
-                setTimeout(() => {
-                    if (!onSticker) {
-                        isFixed = false;
-                        cursorSubEllipse.style.transition = '0s ry, 0s rx';
-                    }
-                }, 100);
+
+                setTimeout(
+                    () => {
+                        if (!onSticker) {
+                            isFixed = false;
+                            cursorSubEllipse.style.transition = '0s ry, 0s rx';
+                        }
+                    },
+
+                    100
+                );
             });
 
             sticker.addEventListener('click', (e) => {
@@ -1031,12 +1114,17 @@ $(document).ready(function () {
                 onSticker = false;
                 cursorSubEllipse.style.ry = 19.5 + 'px';
                 cursorSubEllipse.style.rx = 19.5 + 'px';
-                setTimeout(() => {
-                    if (!onSticker) {
-                        isFixed = false;
-                        cursorSubEllipse.style.transition = '0s ry, 0s rx';
-                    }
-                }, 100);
+
+                setTimeout(
+                    () => {
+                        if (!onSticker) {
+                            isFixed = false;
+                            cursorSubEllipse.style.transition = '0s ry, 0s rx';
+                        }
+                    },
+
+                    100
+                );
             });
         });
 
@@ -1045,52 +1133,323 @@ $(document).ready(function () {
             '.cursor__sticker_input'
         );
         const cursorPoint = document.querySelector('.cursor__point');
+
         stickerInputs.forEach((sticker, index) => {
             sticker.addEventListener('mouseenter', (e) => {
                 const input = document.querySelector('.group input:focus');
+
                 if (!(input === sticker)) {
-                    cursorMain.style.backgroundColor =
-                        'rgba(253, 253, 253, 0.0)';
-                    cursorPoint.style.height = '40px';
-                    cursorPoint.style.borderRadius = '0px';
-                    cursorPoint.style.width = '2px';
+                    cursorMain.classList.add('cursor_no-shadow');
+                    cursorPoint.classList.add('cursor__point_input');
                 }
             });
+
             sticker.addEventListener('mouseleave', (e) => {
-                cursorMain.style.backgroundColor = 'rgba(253, 253, 253, 0.2)';
-                cursorPoint.style.height = '12px';
-                cursorPoint.style.borderRadius = '50%';
-                cursorPoint.style.width = '12px';
+                cursorMain.classList.remove('cursor_no-shadow');
+                cursorPoint.classList.remove('cursor__point_input');
             });
+
             sticker.addEventListener('mousemove', (e) => {
                 const input = document.querySelector('.group input:focus');
+
                 if (input === sticker) {
-                    cursorMain.style.backgroundColor =
-                        'rgba(253, 253, 253, 0.2)';
-                    cursorPoint.style.height = '12px';
-                    cursorPoint.style.borderRadius = '50%';
-                    cursorPoint.style.width = '12px';
+                    cursorMain.classList.add('cursor_no-shadow');
+                    cursorPoint.classList.add('cursor__point_input');
                 }
             });
+        });
+
+        //cursor my-works
+        const navBlockLeft = document.querySelector(
+            '.my-works__nav-block_left'
+        );
+        const navBlockRight = document.querySelector(
+            '.my-works__nav-block_right'
+        );
+
+        navBlockRight.addEventListener('mousemove', (e) => {
+            const isEnd = navBlockRight.classList.contains(
+                'my-works__nav-block_end'
+            );
+
+            if (!isEnd) {
+                cursorPoint.classList.add('cursor__arrow_right');
+                cursorMain.classList.add('cursor_no-shadow');
+            }
+        });
+
+        navBlockLeft.addEventListener('mousemove', (e) => {
+            const isEnd = navBlockRight.classList.contains(
+                'my-works__nav-block_end'
+            );
+
+            if (!isEnd) {
+                cursorPoint.classList.add('cursor__arrow_left');
+                cursorMain.classList.add('cursor_no-shadow');
+            }
+        });
+
+        navBlockRight.addEventListener('mouseleave', (e) => {
+            cursorMain.classList.remove('cursor_no-shadow');
+            cursorPoint.classList.remove('cursor__arrow_right');
+        });
+
+        navBlockLeft.addEventListener('mouseleave', (e) => {
+            cursorMain.classList.remove('cursor_no-shadow');
+            cursorPoint.classList.remove('cursor__arrow_left');
         });
     }
 })();
 
 //my works
 (function () {
-    function appearScroll(appearBlock, callback, border) {
-        let flag = true;
-        const wrapper = document.querySelector('#wrapper');
+    const isMobile = /Mobile|webOS|BlackBerry|IEMobile|MeeGo|mini|Fennec|Windows Phone|Android|iP(ad|od|hone)/i.test(
+        navigator.userAgent
+    );
+    console.log(isMobile);
+    const myWorks = document.querySelector('.my-works');
+    const myWorksCases = document.querySelector('.my-works__cases');
+    const wrapper = document.querySelector('#wrapper');
+    const navBlockLeft = document.querySelector('.my-works__nav-block_left');
+    const navBlockRight = document.querySelector('.my-works__nav-block_right');
+    let appearTop = myWorks.getBoundingClientRect();
+    let vh = document.documentElement.clientHeight;
+    let vw = document.documentElement.clientWidth;
+    let scrollValue;
+    let position = vw;
+    let slideNumber = 0;
+    let caseBlock = document.querySelectorAll('.my-works__case');
+    let caseWidth = caseBlock[0].offsetWidth;
+    let caseMargin = +getComputedStyle(caseBlock[0]).marginRight.slice(0, -2);
+    let sumCaseWidth = caseWidth + caseMargin;
+    let steps = [
+        vw / 2 - caseWidth / 2,
+        vw / 2 - caseWidth / 2 - sumCaseWidth,
+        vw / 2 - caseWidth / 2 - sumCaseWidth * 2,
+        vw / 2 - caseWidth / 2 - sumCaseWidth * 3,
+        vw / 2 - caseWidth / 2 - sumCaseWidth * 4,
+    ];
+    let rightFlag = true;
+    let leftFlag = true;
 
-        wrapper.addEventListener('scroll', () => {
-            let appearTop = appearBlock.getBoundingClientRect();
-            let vh = document.documentElement.clientHeight;
-            let appearValue = appearTop.top - vh * border;
+    let offset = 0;
+    if (isMobile) {
+        const arrows = document.querySelectorAll('.my-works__nav-block');
+        const casesWrapper = document.querySelector('.my-works__cases-wrapper');
+        const caseGit = document.querySelector('.my-works__case-git');
+        arrows.forEach((item) => {
+            item.style.display = 'none';
+        });
+        caseGit.style.marginRight = '0px';
+        myWorksCases.style.left = `${vw / 2 - caseWidth / 2}px`;
+        casesWrapper.style.overflowX = 'auto';
+    }
+    window.addEventListener('resize', () => {
+        appearTop = myWorks.getBoundingClientRect();
+        vh = document.documentElement.clientHeight;
+        vw = document.documentElement.clientWidth;
+        scrollValue;
+        position = vw;
+        slideNumber = 0;
+        caseBlock = document.querySelectorAll('.my-works__case');
+        caseWidth = caseBlock[0].offsetWidth;
+        caseMargin = +getComputedStyle(caseBlock[0]).marginRight.slice(0, -2);
+        sumCaseWidth = caseWidth + caseMargin;
+        steps = [
+            vw / 2 - caseWidth / 2,
+            vw / 2 - caseWidth / 2 - sumCaseWidth,
+            vw / 2 - caseWidth / 2 - sumCaseWidth * 2,
+            vw / 2 - caseWidth / 2 - sumCaseWidth * 3,
+            vw / 2 - caseWidth / 2 - sumCaseWidth * 4,
+        ];
+    });
+    function сalculatePositionOfCases() {
+        appearTop = myWorks.getBoundingClientRect();
+        vh = document.documentElement.clientHeight;
+        scrollValue = (appearTop.top - vh) / vh;
 
-            if (appearValue <= 0 && flag) {
-                callback();
-                flag = false;
+        position = offset + vw / 2 - vw * -scrollValue * 0.3;
+        if (scrollValue < 0 && scrollValue > -2) {
+            myWorksCases.style.left = position + 'px';
+        }
+
+        if (position > steps[0]) {
+            slideNumber = 0;
+        } else if (steps[0] > position && steps[1] < position) {
+            slideNumber = 1;
+        } else if (steps[1] > position && steps[2] < position) {
+            slideNumber = 2;
+        } else if (steps[2] > position && steps[3] < position) {
+            slideNumber = 3;
+        } else if (steps[3] > position && steps[4] < position) {
+            slideNumber = 4;
+        }
+
+        if (!isMobile) сalculateOpacityAndScaleOfCases();
+    }
+
+    function сalculateOpacityAndScaleOfCases() {
+        steps.forEach((item, index, array) => {
+            if (index != array.length - 1) {
+                let opacity = 3 / (1 + Math.abs(item - position) / 100);
+                let scale = 1 / (1 + Math.abs(item - position) / 8000);
+
+                if (opacity > 1) opacity = 1;
+                caseBlock[index].style.opacity = opacity;
+
+                if (scale < 0.9) scale = 0.9;
+                caseBlock[index].style.transform = 'scale(' + scale * 1.1 + ')';
             }
         });
     }
+
+    function сalculatePositionOfCasesArrow(direction) {
+        let count = 0;
+
+        let oneStep = 0;
+
+        if (direction < 0 && steps[slideNumber] != undefined) {
+            oneStep = (steps[slideNumber] - position) / 60;
+
+            if (
+                Math.abs(oneStep) < 2.5 &&
+                steps[slideNumber + 1] != undefined
+            ) {
+                oneStep = (steps[slideNumber + 1] - position) / 60;
+            }
+        }
+
+        if (direction > 0 && steps[slideNumber - 1] != undefined) {
+            oneStep = (steps[slideNumber - 1] - position) / 60;
+
+            if (
+                Math.abs(oneStep) < 2.5 &&
+                steps[slideNumber - 2] != undefined
+            ) {
+                oneStep = (steps[slideNumber - 2] - position) / 60;
+            }
+        }
+
+        requestAnimationFrame(measure);
+
+        function measure() {
+            if (count < 30) offset += (oneStep * count) / 15;
+            if (count >= 30) offset += (oneStep * (60 - count)) / 15;
+            count++;
+            сalculatePositionOfCases();
+
+            if (count <= 60) {
+                requestAnimationFrame(measure);
+            }
+        }
+    }
+
+    navBlockLeft.addEventListener('click', () => {
+        if (leftFlag) {
+            leftFlag = false;
+
+            setTimeout(
+                () => {
+                    leftFlag = true;
+                },
+
+                800
+            );
+            сalculatePositionOfCasesArrow(1);
+        }
+    });
+
+    navBlockRight.addEventListener('click', () => {
+        if (rightFlag) {
+            rightFlag = false;
+
+            setTimeout(
+                () => {
+                    rightFlag = true;
+                },
+
+                800
+            );
+            сalculatePositionOfCasesArrow(-1);
+        }
+    });
+
+    wrapper.addEventListener('scroll', () => {
+        сalculatePositionOfCases();
+    });
+
+    // my works more about scrolling
+    let Req;
+    function scrolling(index) {
+        const moreAboutScnWrapper = document.querySelectorAll(
+            '.more-about-my-works__scn-wrapper'
+        )[index];
+        // const width = moreAboutScnWrapper.getBoundingClientRect().width;
+        Req = requestAnimationFrame(scrollingAnimation);
+
+        let positionScnWrapper = 0;
+        function scrollingAnimation() {
+            const newNode = moreAboutScnWrapper.firstElementChild;
+            const firstWidth =
+                newNode.getBoundingClientRect().width +
+                +getComputedStyle(newNode).marginRight.slice(0, -2);
+            if (-positionScnWrapper >= firstWidth) {
+                positionScnWrapper += firstWidth;
+                newNode.remove();
+                moreAboutScnWrapper.append(newNode);
+            }
+            positionScnWrapper -= 2;
+            moreAboutScnWrapper.style.left = positionScnWrapper + 'px';
+
+            Req = requestAnimationFrame(scrollingAnimation);
+        }
+    }
+    // my works more about pop up
+    const moreAboutButton = document.querySelectorAll(
+        '.text-block__more-about'
+    );
+    const moreAboutWrapper = document.querySelectorAll(
+        '.more-about-my-works__wrapper'
+    );
+    const container = document.querySelector('.container');
+    const moreAboutBlock = document.querySelectorAll('.more-about-my-works');
+    const moreAboutArrow = document.querySelectorAll(
+        '.more-about-my-works__arrow'
+    );
+    let scroll;
+    moreAboutButton.forEach((item, index) => {
+        moreAboutArrow[index].addEventListener('click', (e) => {
+            cancelAnimationFrame(Req);
+
+            container.style.top = -scroll + 'px';
+            container.classList.remove('container_no-scroll');
+            wrapper.scrollTo(0, scroll);
+            setTimeout(() => {
+                moreAboutWrapper[index].classList.remove(
+                    'more-about-my-works__wrapper_active'
+                );
+            }, 300);
+            moreAboutBlock[index].classList.remove(
+                'more-about-my-works_active'
+            );
+        });
+        item.addEventListener('click', (e) => {
+            e.preventDefault();
+
+            scrolling(index);
+            scroll = wrapper.scrollTop;
+
+            container.style.top = -scroll + 'px';
+            container.classList.add('container_no-scroll');
+            wrapper.scrollTo(0, scroll);
+            moreAboutWrapper[index].classList.add(
+                'more-about-my-works__wrapper_active'
+            );
+            setTimeout(() => {
+                moreAboutBlock[index].classList.add(
+                    'more-about-my-works_active'
+                );
+            }, 500);
+        });
+    });
 })();
